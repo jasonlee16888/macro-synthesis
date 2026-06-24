@@ -1,0 +1,209 @@
+name: macro-regime-us-stocks
+display_name: "Macro Synthesis US Stock Rotation"
+version: "0.1.0"
+description: "Multi-symbol AI regime rotation on Bitget RWA US stock perpetuals with rate-cycle-aware risk budgeting"
+long_description: |
+  This Playbook rotates capital across a basket of tokenized US stock
+  perpetuals on Bitget, selecting the instrument with the strongest
+  regime score at each decision point. The central thesis is that market
+  price action encodes macro conditions in real time: rather than waiting
+  for economic releases, the strategy reads volatility structure, trend
+  quality, volume conviction, and momentum persistence to infer whether
+  conditions favour positioning. By comparing these signals across
+  multiple stocks, it identifies where macro tailwinds and micro strength
+  converge.
+
+  Entry decisions rely on a composite four-layer regime score computed
+  independently for each symbol. The volatility layer measures both the
+  level and the term structure of price swings, rewarding calm and
+  contracting conditions. The trend quality layer fuses directional
+  alignment with a clean-versus-choppy efficiency check so that smooth,
+  tradeable trends score higher than noisy drift. The volume conviction
+  layer compares buying pressure against selling pressure to verify that
+  directional moves are backed by committed capital. The momentum
+  persistence layer confirms that recent bars are consistently pointing
+  in the same direction. When a symbol's regime score crosses above the
+  entry threshold, the strategy enters long. When it drops below the exit
+  threshold, the strategy exits and may rotate into a different symbol
+  whose regime is stronger.
+
+  A rotation margin prevents excessive switching: the challenger symbol
+  must beat the incumbent by a meaningful margin before capital moves.
+  Hysteresis ensures that exiting requires stronger evidence than
+  entering, while regime memory adapts thresholds over time, becoming
+  more protective as profits accumulate and more opportunistic when the
+  strategy has been idle. A rate cycle overlay adjusts risk budgets
+  based on the direction of monetary policy, tightening thresholds when
+  rates are rising and loosening them when they are falling.
+
+  Subscribers can tune all four layer weights, the entry and exit
+  thresholds, the rotation margin, hysteresis and memory decay rates,
+  leverage, margin budget, and the trading symbol universe. The strategy
+  underperforms in range-bound markets where no symbol sustains a clean
+  trend, during sharp macro reversals where regime shifts register only
+  after the gap, and when RWA perpetual liquidity is thin. Past backtest
+  performance is not a guarantee of live profitability. Only subscribe
+  with capital you can afford to draw down.
+
+market_type: contract
+trading_symbols: ["AAPLUSDT"]
+tags: ["rwa", "us-stocks", "macro", "regime", "rotation", "multi-symbol", "rate-cycle", "contract"]
+schedule:
+  cron: "0 */4 * * *"
+  tz: "America/New_York"
+
+decision_mode: deterministic
+backtest_support: full
+runtime_profile: deterministic
+execution_mode: signal_only
+follow_trade_supported: false
+
+strategy_config:
+  trading_symbols: ["AAPLUSDT"]
+  volatility_lookback: 14
+  trend_fast: 6
+  trend_slow: 20
+  momentum_period: 8
+  volatility_weight: 0.25
+  trend_weight: 0.45
+  momentum_weight: 0.30
+  regime_threshold_risk_on: 0.35
+  regime_threshold_risk_off: 0.10
+  rotation_margin: 0.08
+  hysteresis: 0.06
+  memory_decay: 0.0008
+  rate_regime: 0.5
+  leverage: 10
+  margin_budget: "5000"
+
+user_config_schema:
+  trading_symbols:
+    type: array
+    item_type: string
+    default: ["AAPLUSDT", "TSLAUSDT", "NVDAUSDT"]
+    options: ["AAPLUSDT", "TSLAUSDT", "NVDAUSDT", "GOOGLUSDT", "AMZNUSDT", "METAUSDT"]
+    aliases:
+      aapl: AAPLUSDT
+      apple: AAPLUSDT
+      tsla: TSLAUSDT
+      tesla: TSLAUSDT
+      nvda: NVDAUSDT
+      nvidia: NVDAUSDT
+      googl: GOOGLUSDT
+      google: GOOGLUSDT
+      amzn: AMZNUSDT
+      amazon: AMZNUSDT
+      meta: METAUSDT
+    min_items: 2
+    max_items: 5
+    label: "Trading symbols"
+  volatility_lookback:
+    type: integer
+    default: 24
+    min: 10
+    max: 50
+    label: "Volatility lookback period"
+  trend_fast:
+    type: integer
+    default: 8
+    min: 3
+    max: 20
+    label: "Trend fast period"
+  trend_slow:
+    type: integer
+    default: 24
+    min: 8
+    max: 60
+    label: "Trend slow period"
+  momentum_period:
+    type: integer
+    default: 12
+    min: 3
+    max: 30
+    label: "Momentum lookback period"
+  volume_lookback:
+    type: integer
+    default: 24
+    min: 8
+    max: 50
+    label: "Volume lookback period"
+  efficiency_period:
+    type: integer
+    default: 24
+    min: 8
+    max: 50
+    label: "Trend efficiency lookback"
+  volatility_weight:
+    type: number
+    default: 0.28
+    min: 0.05
+    max: 0.50
+    label: "Volatility layer weight"
+  trend_weight:
+    type: number
+    default: 0.28
+    min: 0.05
+    max: 0.50
+    label: "Trend layer weight"
+  volume_weight:
+    type: number
+    default: 0.22
+    min: 0.05
+    max: 0.40
+    label: "Volume conviction weight"
+  momentum_weight:
+    type: number
+    default: 0.22
+    min: 0.05
+    max: 0.40
+    label: "Momentum weight"
+  regime_threshold_risk_on:
+    type: number
+    default: 0.48
+    min: 0.35
+    max: 0.65
+    label: "Entry threshold"
+  regime_threshold_risk_off:
+    type: number
+    default: 0.30
+    min: 0.15
+    max: 0.45
+    label: "Exit threshold"
+  rotation_margin:
+    type: number
+    default: 0.08
+    min: 0.01
+    max: 0.15
+    label: "Rotation margin"
+  hysteresis:
+    type: number
+    default: 0.04
+    min: 0.01
+    max: 0.15
+    label: "Hysteresis gap"
+  memory_decay:
+    type: number
+    default: 0.0008
+    min: 0.0003
+    max: 0.006
+    label: "Regime memory decay rate"
+  rate_regime:
+    type: number
+    default: 0.5
+    min: 0.0
+    max: 1.0
+    label: "Rate regime (0=hawkish, 1=dovish)"
+  leverage:
+    type: integer
+    default: 5
+    min: 1
+    max: 10
+    aliases:
+      3x: 3
+      5x: 5
+    label: "Leverage"
+  margin_budget:
+    type: string
+    default: "2000"
+    pattern: "^[0-9]+(\\.[0-9]+)?$"
+    label: "Margin budget USDT"

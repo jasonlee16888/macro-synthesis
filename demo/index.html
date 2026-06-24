@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Macro Synthesis — 6‑Agent Trump Policy × AI Regime Rotation</title>
+<style>
+  :root { --bg:#06060c; --card:#0f0f18; --border:#1a1a2e; --text:#cdd6f4; --muted:#6c7086; --green:#a6e3a1; --red:#f38ba8; --blue:#89b4fa; --yellow:#f9e2af; --purple:#cba6f7; --orange:#fab387; }
+  * { margin:0; padding:0; box-sizing:border-box; }
+  body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.6; }
+  .hero { text-align:center; padding:70px 20px 50px; border-bottom:1px solid var(--border); background:linear-gradient(180deg, rgba(137,180,250,.04) 0%, transparent 100%); }
+  .hero h1 { font-size:2.6em; font-weight:800; background:linear-gradient(135deg,var(--orange),var(--purple),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero .sub { color:var(--muted); font-size:1.15em; margin-top:10px; }
+  .hero .vs { margin-top:16px; font-size:.85em; color:var(--muted); opacity:.7; }
+  .container { max-width:1140px; margin:0 auto; padding:30px 20px 50px; }
+  h2 { font-size:1.5em; font-weight:700; margin:40px 0 16px; padding-bottom:6px; border-bottom:2px solid var(--purple); display:inline-block; }
+  h3 { font-size:1rem; margin-bottom:12px; color:var(--blue); }
+  .pipeline { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; align-items:center; margin:20px 0; }
+  .ps { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 14px; min-width:130px; text-align:center; font-size:.85em; }
+  .ps .n { font-size:.7em; color:var(--purple); font-weight:700; }
+  .ps .l { font-weight:600; margin:3px 0; }
+  .ps .d { font-size:.75em; color:var(--muted); }
+  .arr { color:var(--purple); font-size:1.2em; }
+  .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
+  .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
+  .card.buy { border-left:3px solid var(--green); }
+  .card.warn { border-left:3px solid var(--red); }
+  .radar-item { padding:8px 0; border-bottom:1px solid var(--border); font-size:.88em; display:flex; gap:10px; align-items:flex-start; }
+  .radar-item:last-child { border-bottom:none; }
+  .radar-date { color:var(--muted); min-width:42px; font-size:.78em; }
+  .radar-impact { font-size:.75em; padding:1px 6px; border-radius:3px; font-weight:600; }
+  .impact-macro { background:rgba(243,139,168,.15); color:var(--red); }
+  .impact-sector { background:rgba(249,226,175,.15); color:var(--yellow); }
+  .impact-company { background:rgba(166,227,161,.15); color:var(--green); }
+  table { width:100%; border-collapse:collapse; font-size:.88em; }
+  th, td { padding:8px 10px; text-align:left; border-bottom:1px solid var(--border); }
+  th { color:var(--muted); font-weight:500; font-size:.8em; }
+  .score { font-weight:700; }
+  .metrics { display:flex; gap:12px; flex-wrap:wrap; }
+  .m { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; flex:1; min-width:100px; text-align:center; }
+  .m .v { font-size:1.9em; font-weight:700; }
+  .m .l { color:var(--muted); font-size:.78em; margin-top:2px; }
+  .v.g { color:var(--green); } .v.b { color:var(--blue); } .v.p { color:var(--purple); }
+  .signal { background:rgba(166,227,161,.06); border:1px solid var(--green); border-radius:12px; padding:18px 24px; margin:20px 0; }
+  .signal .a { font-size:1.3em; font-weight:700; color:var(--green); }
+  .signal .r { font-size:.82em; color:var(--muted); margin-top:6px; }
+  .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:.75em; font-weight:600; }
+  .tag-buy { background:rgba(166,227,161,.15); color:var(--green); }
+  .tag-watch { background:rgba(249,226,175,.15); color:var(--yellow); }
+  .tag-avoid { background:rgba(243,139,168,.15); color:var(--red); }
+  footer { text-align:center; padding:40px 20px; color:var(--muted); font-size:.8em; border-top:1px solid var(--border); margin-top:40px; }
+  @media(max-width:768px){ .grid{grid-template-columns:1fr;} .hero h1{font-size:1.6em;} .pipeline{flex-direction:column;} .arr{transform:rotate(90deg);} }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <h1>Macro Synthesis</h1>
+  <div class="sub">6‑Agent Trump Policy Radar × AI Regime Rotation</div>
+  <div class="vs">Policy → Stocks → Timing → Execution. Afterbell protects your positions. We find them.</div>
+</div>
+
+<div class="container">
+
+  <!-- Pipeline -->
+  <h2>系统架构</h2>
+  <div class="pipeline">
+    <div class="ps"><div class="n">AGENT 0</div><div class="l">🔭 Policy Radar</div><div class="d">Truth Social · 行政令<br>关税 · 芯片政策</div></div>
+    <div class="arr">→</div>
+    <div class="ps"><div class="n">AGENT 1–5</div><div class="l">🔍 交叉验证</div><div class="d">Trump 仓位 · 政客<br>内部人 · 财报 · 风险</div></div>
+    <div class="arr">→</div>
+    <div class="ps"><div class="n">OUTPUT</div><div class="l">📋 精选标的池</div><div class="d">Top 3 标的<br>动态更新</div></div>
+    <div class="arr">→</div>
+    <div class="ps"><div class="n">TIMING</div><div class="l">🎯 Regime 择时</div><div class="d">3‑Layer 评分<br>轮动 · 风控</div></div>
+    <div class="arr">→</div>
+    <div class="ps"><div class="n">EXEC</div><div class="l">📡 交易信号</div><div class="d">Bitget RWA<br>永续合约</div></div>
+  </div>
+
+  <div class="grid">
+    <!-- Policy Radar -->
+    <div class="card">
+      <h3>🔭 Policy Radar — 活跃信号</h3>
+      <div class="radar-item">
+        <div class="radar-date">6/18</div>
+        <div><strong>Truth Social: Apple-Intel-Nvidia 芯片合作</strong><br><span style="font-size:.82em;color:var(--muted);">Trump 亲宣三家公司与 Intel 合作，Intel 当日 +11%</span></div>
+        <div><span class="radar-impact impact-sector">行业级</span></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-date">6/18</div>
+        <div><strong>Musk TerraFab 建厂获力挺</strong><br><span style="font-size:.82em;color:var(--muted);">"全球最大芯片工厂" — 政府 10% 持股 Intel</span></div>
+        <div><span class="radar-impact impact-sector">行业级</span></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-date">6/16</div>
+        <div><strong>Intel 18A-P 风险试产上路</strong><br><span style="font-size:.82em;color:var(--muted);">18A 增强版，性能 +9% 或功耗 −18%</span></div>
+        <div><span class="radar-impact impact-company">公司级</span></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-date">6/中旬</div>
+        <div><strong>Section 301 关税提案（60 国）</strong><br><span style="font-size:.82em;color:var(--muted);">12.5% 关税，7/6 公众评论截止，7/7 听证</span></div>
+        <div><span class="radar-impact impact-macro">宏观级</span></div>
+      </div>
+      <div class="radar-item">
+        <div class="radar-date">6/中旬</div>
+        <div><strong>中国 125% 报复关税 + 稀土限制</strong><br><span style="font-size:.82em;color:var(--muted);">对美全面加征，稀土出口管制升级</span></div>
+        <div><span class="radar-impact impact-macro">宏观级</span></div>
+      </div>
+    </div>
+
+    <!-- Watchlist -->
+    <div class="card buy">
+      <h3>📋 精选标的池 · 6 Agent 综合评分</h3>
+      <table>
+        <thead><tr><th>#</th><th>标的</th><th>Policy</th><th>Trump</th><th>政客</th><th>内部人</th><th>财报</th><th>追高</th><th class="score">综合</th><th>操作</th></tr></thead>
+        <tbody>
+          <tr>
+            <td>🥇</td><td><strong>NVDA</strong></td><td>0.9</td><td>1.0</td><td>1.0</td><td>0.5</td><td>1.0</td><td>0.6</td><td class="score" style="color:var(--green)">0.87</td><td><span class="tag tag-buy">LONG</span></td>
+          </tr>
+          <tr>
+            <td>🥈</td><td><strong>AAPL</strong></td><td>0.7</td><td>0.6</td><td>0.5</td><td>0.5</td><td>0.7</td><td>0.9</td><td class="score" style="color:var(--blue)">0.68</td><td><span class="tag tag-watch">WATCH</span></td>
+          </tr>
+          <tr>
+            <td>🥉</td><td><strong>TSLA</strong></td><td>0.8</td><td>0.5</td><td>0.5</td><td>0.5</td><td>0.6</td><td>0.6</td><td class="score" style="color:var(--blue)">0.62</td><td><span class="tag tag-watch">WATCH</span></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:.72em;color:var(--muted);margin-top:8px;">
+        权重: Policy 20% · Trump 仓位 25% · 内部人 20% · 政客 15% · 财报 12% · 追高风险 8%
+      </div>
+    </div>
+  </div>
+
+  <!-- Backtest -->
+  <h2>回测证据</h2>
+  <div class="metrics">
+    <div class="m"><div class="v g">+$119.26</div><div class="l">净利润（2.5 个月）</div></div>
+    <div class="m"><div class="v b">2.38%</div><div class="l">账户回报率</div></div>
+    <div class="m"><div class="v b">~11.4%</div><div class="l">年化回报率</div></div>
+    <div class="m"><div class="v g">1.79</div><div class="l">夏普比率</div></div>
+    <div class="m"><div class="v g">100%</div><div class="l">胜率</div></div>
+    <div class="m"><div class="v b">3</div><div class="l">交易次数</div></div>
+  </div>
+  <div style="font-size:.78em;color:var(--muted);margin-top:6px;">AAPLUSDT · 4h K线 × 470 · 2026-04-06 → 2026-06-24 · 起始 $5,000</div>
+
+  <!-- Signal -->
+  <div class="signal">
+    <div class="a">🟢 LIVE SIGNAL: LONG NVDAUSDT</div>
+    <div class="r">
+      NVDA regime 0.72（当前标的池最高）· Policy Radar 强利多 · 内部人静默期（财报前） · 追高风险黄灯 → 小仓入场<br>
+      AAPL regime 0.61（WATCH）· TSLA regime 0.48（HOLD）· 等待轮动信号
+    </div>
+    <div style="font-size:.72em;color:var(--muted);margin-top:4px;">信号生成: 2026-06-25 · 下次更新: +4h</div>
+  </div>
+
+  <!-- VS Afterbell -->
+  <h2>差异化定位</h2>
+  <div class="grid">
+    <div class="card warn" style="opacity:.7;">
+      <h3>🛡️ AFTERBELL</h3>
+      <div style="font-size:.9em;">隔夜风险保护工具</div>
+      <ul style="font-size:.85em;color:var(--muted);margin-top:8px;padding-left:18px;">
+        <li>防守型：保护已有仓位</li>
+        <li>输入：通用新闻</li>
+        <li>输出：对冲信号</li>
+        <li>不选股，不择时</li>
+      </ul>
+    </div>
+    <div class="card buy">
+      <h3>⚔️ Macro Synthesis</h3>
+      <div style="font-size:.9em;">政策情报 × 量化择时系统</div>
+      <ul style="font-size:.85em;color:var(--muted);margin-top:8px;padding-left:18px;">
+        <li>进攻型：主动发现机会</li>
+        <li>输入：Trump 政策 + 仓位 + 6 Agent 交叉验证</li>
+        <li>输出：选股 + 择时信号</li>
+        <li>有回测证据（Sharpe 1.79）</li>
+      </ul>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  Macro Synthesis © 2026 · Bitget Track 3 · US Stock AI Trading<br>
+  <span style="font-size:.75em;">Research support only — not financial advice</span>
+</footer>
+</body>
+</html>

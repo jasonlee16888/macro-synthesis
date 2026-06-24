@@ -1,0 +1,52 @@
+venue:
+  name: BINANCE
+  account_type: MARGIN
+  oms_type: NETTING
+  starting_balances:
+    - amount: 5000
+      currency: USDT
+
+strategy:
+  module: strategy
+  class: MacroRegimeStrategy
+  config_class: MacroRegimeStrategyConfig
+  config:
+    order_id_tag: "001"
+    trade_size: "50"
+    volatility_lookback: 14
+    trend_fast: 6
+    trend_slow: 20
+    momentum_period: 8
+    volatility_weight: 0.25
+    trend_weight: 0.45
+    momentum_weight: 0.30
+    regime_threshold_risk_on: 0.35
+    regime_threshold_risk_off: 0.10
+    rotation_margin: 0.08
+    hysteresis: 0.04
+    memory_decay: 0.002
+    rate_regime: 0.5
+
+execution:
+  start: "2026-04-01T00:00:00Z"
+  end: "2026-06-24T00:00:00Z"
+
+execution:
+  start: "2026-04-01T00:00:00Z"
+  end: "2026-06-24T00:00:00Z"
+
+instrument:
+  id: AAPLUSDT.BINANCE
+  kind: perpetual
+  raw_symbol: AAPLUSDT
+  base_currency: AAPL
+  quote_currency: USDT
+  settlement_currency: USDT
+  price_precision: 2
+  size_precision: 3
+  price_increment: "0.01"
+  size_increment: "0.001"
+  lot_size: "0.001"
+  maker_fee: "0.0002"
+  taker_fee: "0.0005"
+  bar_type: AAPLUSDT.BINANCE-4-HOUR-LAST-EXTERNAL
