@@ -34,6 +34,7 @@ class MacroRegimeStrategyConfig(StrategyConfig):
     hysteresis: float = 0.04
     memory_decay: float = 0.002
     rate_regime: float = 0.5
+    defense_mode: float = 0.0  # 0=normal, 1=full defense (from Night Watch)
 
 
 class MacroRegimeStrategy(Strategy):
@@ -111,7 +112,9 @@ class MacroRegimeStrategy(Strategy):
                 self._submit(instrument.id, OrderSide.BUY, qty)
                 self._position = "LONG"
         elif self._position == "LONG":
-            if regime < self.cfg.regime_threshold_risk_off:
+            # Night Watch defense: tighten exit when risk is elevated
+            defense_exit = self.cfg.regime_threshold_risk_off * (1.0 + self.cfg.defense_mode * 0.3)
+            if regime < defense_exit:
                 self._close_position(instrument.id)
                 self._position = "NONE"
 

@@ -1,11 +1,11 @@
 ---
 name: trump-trades-squad
-description: Trump policy & trades monitoring system — 6 agents that track Trump's stock trades, policy statements, politician trades, insider buying, earnings, and chase risk. Outputs a curated watchlist with cross-validated signals. Trigger on "run trump squad", "scan Trump trades", "check policy radar", "update watchlist", "what should I buy based on Trump", or any request about Trump stock trades.
+description: Trump policy & trades monitoring system — 7 agents: Policy Radar, Position Pool, Politician Tracker, Insider Monitor, Earnings Validator, Chase Risk Alert, and Night Watch Guard. Outputs a curated watchlist with cross-validated signals + overnight risk protection. Trigger on "run trump squad", "scan Trump trades", "check policy radar", "night watch", "update watchlist", "what should I buy based on Trump", or any request about Trump stock trades.
 ---
 
 # TrumpTrades Squad
 
-6 个 Agent 协同工作的美股跟单与政策监控系统。
+7 个 Agent 协同工作的美股跟单与政策监控系统——找机会 + 防风险。
 
 ## 使用方式
 

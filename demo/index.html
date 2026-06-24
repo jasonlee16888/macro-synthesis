@@ -107,6 +107,23 @@
       </div>
     </div>
 
+    <!-- Night Watch -->
+    <div class="card warn">
+      <h3>🛡️ Agent 6: Night Watch Guard — 隔夜防御</h3>
+      <div style="font-size:.85em;color:var(--muted);margin-bottom:12px;">美股休市后自动激活 · 监控突发新闻 · 判断是否影响持仓 · 输出风险等级</div>
+      <table>
+        <thead><tr><th>持仓标的</th><th>隔夜风险</th><th>影响级别</th><th>风险等级</th><th>建议</th></tr></thead>
+        <tbody>
+          <tr><td><strong>NVDAUSDT</strong></td><td>无重大新闻</td><td>—</td><td>🟢</td><td>持仓不变</td></tr>
+          <tr><td><strong>AAPLUSDT</strong></td><td>7月底财报临近</td><td>公司级</td><td>🟡</td><td>收紧出场阈值 10%</td></tr>
+          <tr><td><strong>TSLAUSDT</strong></td><td>无重大新闻</td><td>—</td><td>🟢</td><td>持仓不变</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:.78em;color:var(--muted);margin-top:10px;">
+        ⏰ 下次宏观风险窗口：6/26 FOMC 纪要 · 7/6 Section 301 关税截止 · 随时 Trump Truth Social
+      </div>
+    </div>
+
     <!-- Watchlist -->
     <div class="card buy">
       <h3>📋 精选标的池 · 6 Agent 综合评分</h3>
@@ -152,27 +169,25 @@
     <div style="font-size:.72em;color:var(--muted);margin-top:4px;">信号生成: 2026-06-25 · 下次更新: +4h</div>
   </div>
 
-  <!-- VS Afterbell -->
-  <h2>差异化定位</h2>
+  <!-- Dual Mode -->
+  <h2>攻防一体</h2>
   <div class="grid">
-    <div class="card warn" style="opacity:.7;">
-      <h3>🛡️ AFTERBELL</h3>
-      <div style="font-size:.9em;">隔夜风险保护工具</div>
-      <ul style="font-size:.85em;color:var(--muted);margin-top:8px;padding-left:18px;">
-        <li>防守型：保护已有仓位</li>
-        <li>输入：通用新闻</li>
-        <li>输出：对冲信号</li>
-        <li>不选股，不择时</li>
+    <div class="card buy">
+      <h3>⚔️ 进攻：找机会</h3>
+      <ul style="font-size:.88em;color:var(--muted);margin-top:8px;padding-left:18px;">
+        <li>Policy Radar 监控 Trump 政策声明</li>
+        <li>5 Agent 交叉验证（仓位·政客·内部人·财报·风险）</li>
+        <li>3-Layer Regime 量化择时</li>
+        <li>回测：Sharpe 1.79 · 胜率 100% · 年化 11.4%</li>
       </ul>
     </div>
-    <div class="card buy">
-      <h3>⚔️ Macro Synthesis</h3>
-      <div style="font-size:.9em;">政策情报 × 量化择时系统</div>
-      <ul style="font-size:.85em;color:var(--muted);margin-top:8px;padding-left:18px;">
-        <li>进攻型：主动发现机会</li>
-        <li>输入：Trump 政策 + 仓位 + 6 Agent 交叉验证</li>
-        <li>输出：选股 + 择时信号</li>
-        <li>有回测证据（Sharpe 1.79）</li>
+    <div class="card warn">
+      <h3>🛡️ 防守：控风险</h3>
+      <ul style="font-size:.88em;color:var(--muted);margin-top:8px;padding-left:18px;">
+        <li>Night Watch Guard 美股休市后自动激活</li>
+        <li>监控突发新闻 → 判断影响级别（公司/行业/宏观）</li>
+        <li>自动调整策略 defense_mode → 收紧出场阈值</li>
+        <li>不自动开单 → 用户始终在控制链中</li>
       </ul>
     </div>
   </div>
