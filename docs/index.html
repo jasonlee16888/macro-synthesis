@@ -298,6 +298,59 @@ function animateValue(id, val) {
 }
 
 function sleep(ms) { return new Promise(r => timer=setTimeout(r,ms)); }
+
+// Auto-demo mode: add ?demo=auto to URL
+if(location.search.includes('demo=auto')) {
+  document.addEventListener('DOMContentLoaded', async () => {
+    const narration = document.createElement('div');
+    narration.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 24px;border-radius:8px;font-size:1.1em;z-index:1000;text-align:center;transition:all .4s;pointer-events:none;';
+    document.body.appendChild(narration);
+
+    const say = (t) => { narration.textContent = t; narration.style.opacity = 1; };
+
+    await sleep(500);
+    say('🎬 Macro Synthesis — 完整演示开始');
+    await sleep(2000);
+
+    say('🔭 Agent 0: Policy Radar — 扫描 Trump 政策信号');
+    await sleep(1500);
+    say('📊 Agent 1-5: 交叉验证 — Trump 仓位 × 政客 × 内部人 × 财报 × 追高风险');
+    await sleep(2000);
+    say('🛡️ Agent 6: Night Watch — 隔夜风险检查…无风险 ✅');
+    await sleep(1500);
+    say('📋 精选标的池: 🥇 MU 0.82 🥈 NVDA 0.80 🥉 AAPL 0.65');
+    await sleep(2000);
+
+    // Click Start Analysis
+    document.getElementById('btnStart').click();
+    await sleep(6000);
+
+    say('🏆 MU 综合分 0.82 排第一 — 触发交易信号');
+    await sleep(1500);
+    say('🎯 Regime 择时: 波动率结构 + 趋势方向 + 动量持续性 → 确认入场');
+    await sleep(2000);
+
+    // Click Execute Trade
+    document.getElementById('btnTrade').click();
+    await sleep(4000);
+
+    say('⚡ 自动交易: open_long_market(MUUSDT) → Bitget 实盘下单 → 已成交 ✅');
+    await sleep(2000);
+    say('🛡️ Night Watch 自动激活 — 全天候守护持仓');
+    await sleep(2000);
+
+    say('📊 回测证据: +$551 | Sharpe 2.20 | 12 trades | 胜率 66.7% | 年化 ~53%');
+    await sleep(3000);
+
+    say('🎬 Macro Synthesis — 8 Agent 选股 + AI 择时 + 自动交易');
+    await sleep(2000);
+
+    narration.style.opacity = '0';
+    await sleep(500);
+    narration.textContent = '✅ 演示完成 — 感谢观看';
+    narration.style.opacity = '1';
+  });
+}
 </script>
 </body>
 </html>
