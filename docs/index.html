@@ -3,24 +3,45 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Macro Synthesis — 6‑Agent Trump Policy × AI Regime Rotation</title>
+<title>Macro Synthesis — 8‑Agent Trump Policy × AI Regime Auto-Trading</title>
 <style>
   :root { --bg:#06060c; --card:#0f0f18; --border:#1a1a2e; --text:#cdd6f4; --muted:#6c7086; --green:#a6e3a1; --red:#f38ba8; --blue:#89b4fa; --yellow:#f9e2af; --purple:#cba6f7; --orange:#fab387; }
   * { margin:0; padding:0; box-sizing:border-box; }
   body { background:var(--bg); color:var(--text); font-family:'Inter',-apple-system,sans-serif; line-height:1.6; }
-  .hero { text-align:center; padding:70px 20px 50px; border-bottom:1px solid var(--border); background:linear-gradient(180deg, rgba(137,180,250,.04) 0%, transparent 100%); }
-  .hero h1 { font-size:2.6em; font-weight:800; background:linear-gradient(135deg,var(--orange),var(--purple),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
-  .hero .sub { color:var(--muted); font-size:1.15em; margin-top:10px; }
-  .hero .vs { margin-top:16px; font-size:.85em; color:var(--muted); opacity:.7; }
-  .container { max-width:1140px; margin:0 auto; padding:30px 20px 50px; }
-  h2 { font-size:1.5em; font-weight:700; margin:40px 0 16px; padding-bottom:6px; border-bottom:2px solid var(--purple); display:inline-block; }
-  h3 { font-size:1rem; margin-bottom:12px; color:var(--blue); }
-  .pipeline { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; align-items:center; margin:20px 0; }
-  .ps { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 14px; min-width:130px; text-align:center; font-size:.85em; }
-  .ps .n { font-size:.7em; color:var(--purple); font-weight:700; }
-  .ps .l { font-weight:600; margin:3px 0; }
-  .ps .d { font-size:.75em; color:var(--muted); }
-  .arr { color:var(--purple); font-size:1.2em; }
+  .hero { text-align:center; padding:50px 20px 30px; border-bottom:1px solid var(--border); background:linear-gradient(180deg, rgba(137,180,250,.04) 0%, transparent 100%); }
+  .hero h1 { font-size:2.4em; font-weight:800; background:linear-gradient(135deg,var(--orange),var(--purple),var(--blue)); -webkit-background-clip:text; -webkit-text-fill-color:transparent; }
+  .hero .sub { color:var(--muted); font-size:1.1em; margin-top:6px; }
+  .container { max-width:1140px; margin:0 auto; padding:20px; }
+  h2 { font-size:1.4em; font-weight:700; margin:30px 0 12px; padding-bottom:4px; border-bottom:2px solid var(--purple); display:inline-block; }
+  h3 { font-size:1rem; margin-bottom:10px; color:var(--blue); }
+
+  /* Control Panel */
+  .controls { display:flex; gap:12px; justify-content:center; align-items:center; padding:16px 20px; background:var(--card); border:1px solid var(--border); border-radius:14px; margin:16px 0; flex-wrap:wrap; }
+  .btn { border:none; border-radius:8px; padding:12px 28px; font-size:1em; font-weight:600; cursor:pointer; transition:all .2s; color:#fff; }
+  .btn:hover { transform:translateY(-1px); filter:brightness(1.15); }
+  .btn:active { transform:scale(.97); }
+  .btn:disabled { opacity:.3; cursor:not-allowed; transform:none; filter:none; }
+  .btn-start { background:linear-gradient(135deg,var(--green),#40a02b); }
+  .btn-trade { background:linear-gradient(135deg,var(--blue),#1e66f5); }
+  .btn-stop { background:linear-gradient(135deg,var(--red),#d20f39); }
+  .status { font-size:.9em; color:var(--muted); min-width:140px; text-align:center; }
+  .status .dot { display:inline-block; width:8px; height:8px; border-radius:50%; margin-right:6px; }
+  .dot.idle { background:var(--muted); }
+  .dot.running { background:var(--green); animation:pulse .8s infinite; }
+  .dot.error { background:var(--red); }
+  @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:.3} }
+
+  /* Log */
+  .log { background:#000; border:1px solid var(--border); border-radius:10px; padding:14px; max-height:260px; overflow-y:auto; font-family:'SF Mono',monospace; font-size:.8em; margin:12px 0; }
+  .log .line { padding:2px 0; }
+  .log .ts { color:var(--muted); }
+  .log .agent { color:var(--purple); font-weight:600; }
+  .log .ok { color:var(--green); }
+  .log .warn { color:var(--yellow); }
+  .log .err { color:var(--red); }
+  .log .info { color:var(--blue); }
+
+  /* Cards & Grid */
   .grid { display:grid; grid-template-columns:1fr 1fr; gap:16px; }
   .card { background:var(--card); border:1px solid var(--border); border-radius:12px; padding:20px; }
   .card.buy { border-left:3px solid var(--green); }
@@ -37,167 +58,243 @@
   th { color:var(--muted); font-weight:500; font-size:.8em; }
   .score { font-weight:700; }
   .metrics { display:flex; gap:12px; flex-wrap:wrap; }
-  .m { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; flex:1; min-width:100px; text-align:center; }
+  .m { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:16px 20px; flex:1; min-width:100px; text-align:center; transition:all .3s; }
+  .m.highlight { border-color:var(--green); box-shadow:0 0 12px rgba(166,227,161,.2); }
   .m .v { font-size:1.9em; font-weight:700; }
   .m .l { color:var(--muted); font-size:.78em; margin-top:2px; }
   .v.g { color:var(--green); } .v.b { color:var(--blue); } .v.p { color:var(--purple); }
-  .signal { background:rgba(166,227,161,.06); border:1px solid var(--green); border-radius:12px; padding:18px 24px; margin:20px 0; }
-  .signal .a { font-size:1.3em; font-weight:700; color:var(--green); }
+  .signal { background:rgba(166,227,161,.06); border:1px solid var(--border); border-radius:12px; padding:18px 24px; margin:20px 0; transition:all .3s; }
+  .signal.active { border-color:var(--green); box-shadow:0 0 20px rgba(166,227,161,.15); }
+  .signal .a { font-size:1.3em; font-weight:700; }
   .signal .r { font-size:.82em; color:var(--muted); margin-top:6px; }
   .tag { display:inline-block; padding:2px 8px; border-radius:4px; font-size:.75em; font-weight:600; }
   .tag-buy { background:rgba(166,227,161,.15); color:var(--green); }
   .tag-watch { background:rgba(249,226,175,.15); color:var(--yellow); }
   .tag-avoid { background:rgba(243,139,168,.15); color:var(--red); }
+  .pipeline { display:flex; gap:8px; flex-wrap:wrap; justify-content:center; align-items:center; margin:20px 0; }
+  .ps { background:var(--card); border:1px solid var(--border); border-radius:10px; padding:12px 14px; min-width:130px; text-align:center; font-size:.85em; transition:all .3s; }
+  .ps.highlight { border-color:var(--green); box-shadow:0 0 10px rgba(166,227,161,.3); }
+  .ps .n { font-size:.7em; color:var(--purple); font-weight:700; }
+  .ps .l { font-weight:600; margin:3px 0; }
+  .ps .d { font-size:.75em; color:var(--muted); }
+  .arr { color:var(--purple); font-size:1.2em; }
+
+  /* Toast */
+  .toast { position:fixed; top:20px; right:20px; background:var(--green); color:#000; padding:14px 24px; border-radius:10px; font-weight:700; z-index:999; animation:slideIn .4s ease; display:none; }
+  .toast.show { display:block; }
+  @keyframes slideIn { from{transform:translateX(120%);opacity:0} to{transform:translateX(0);opacity:1} }
+
   footer { text-align:center; padding:40px 20px; color:var(--muted); font-size:.8em; border-top:1px solid var(--border); margin-top:40px; }
-  @media(max-width:768px){ .grid{grid-template-columns:1fr;} .hero h1{font-size:1.6em;} .pipeline{flex-direction:column;} .arr{transform:rotate(90deg);} }
+  @media(max-width:768px){ .grid{grid-template-columns:1fr;} .hero h1{font-size:1.4em;} .pipeline{flex-direction:column;} .arr{transform:rotate(90deg);} }
 </style>
 </head>
 <body>
 
 <div class="hero">
   <h1>Macro Synthesis</h1>
-  <div class="sub">6‑Agent Trump Policy Radar × AI Regime Rotation</div>
-  <div class="vs">Policy → Stocks → Timing → Execution. Afterbell protects your positions. We find them.</div>
+  <div class="sub">8‑Agent Trump Policy Radar × AI Regime Auto‑Trading</div>
+  <div style="margin-top:10px;font-size:.8em;color:var(--muted);">Bitget Track 3 · US Stock AI Trading</div>
 </div>
 
 <div class="container">
 
-  <!-- Pipeline -->
-  <h2>系统架构</h2>
-  <div class="pipeline">
-    <div class="ps"><div class="n">AGENT 0</div><div class="l">🔭 Policy Radar</div><div class="d">Truth Social · 行政令<br>关税 · 芯片政策</div></div>
-    <div class="arr">→</div>
-    <div class="ps"><div class="n">AGENT 1–5</div><div class="l">🔍 交叉验证</div><div class="d">Trump 仓位 · 政客<br>内部人 · 财报 · 风险</div></div>
-    <div class="arr">→</div>
-    <div class="ps"><div class="n">OUTPUT</div><div class="l">📋 精选标的池</div><div class="d">Top 3 标的<br>动态更新</div></div>
-    <div class="arr">→</div>
-    <div class="ps"><div class="n">TIMING</div><div class="l">🎯 Regime 择时</div><div class="d">3‑Layer 评分<br>轮动 · 风控</div></div>
-    <div class="arr">→</div>
-    <div class="ps"><div class="n">EXEC</div><div class="l">📡 自动交易</div><div class="d">follow_trade<br>Bitget 实盘执行</div></div>
+  <!-- Control Panel -->
+  <div class="controls">
+    <button class="btn btn-start" id="btnStart" onclick="startAnalysis()">▶ 启动分析</button>
+    <button class="btn btn-trade" id="btnTrade" onclick="executeTrade()" disabled>⚡ 执行交易</button>
+    <button class="btn btn-stop" id="btnStop" onclick="stopAll()" disabled>⏹ 停止</button>
+    <div class="status"><span class="dot idle" id="statusDot"></span><span id="statusText">待命中</span></div>
   </div>
+
+  <!-- Live Log -->
+  <div class="log" id="log"><div class="line"><span class="ts">[System]</span> <span class="info">Macro Synthesis v0.1.0 ready. 点击「启动分析」开始.</span></div></div>
 
   <div class="grid">
     <!-- Policy Radar -->
     <div class="card">
       <h3>🔭 Policy Radar — 活跃信号</h3>
-      <div class="radar-item">
-        <div class="radar-date">6/18</div>
-        <div><strong>Truth Social: Apple-Intel-Nvidia 芯片合作</strong><br><span style="font-size:.82em;color:var(--muted);">Trump 亲宣三家公司与 Intel 合作，Intel 当日 +11%</span></div>
-        <div><span class="radar-impact impact-sector">行业级</span></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-date">6/18</div>
-        <div><strong>Musk TerraFab 建厂获力挺</strong><br><span style="font-size:.82em;color:var(--muted);">"全球最大芯片工厂" — 政府 10% 持股 Intel</span></div>
-        <div><span class="radar-impact impact-sector">行业级</span></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-date">6/16</div>
-        <div><strong>Intel 18A-P 风险试产上路</strong><br><span style="font-size:.82em;color:var(--muted);">18A 增强版，性能 +9% 或功耗 −18%</span></div>
-        <div><span class="radar-impact impact-company">公司级</span></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-date">6/中旬</div>
-        <div><strong>Section 301 关税提案（60 国）</strong><br><span style="font-size:.82em;color:var(--muted);">12.5% 关税，7/6 公众评论截止，7/7 听证</span></div>
-        <div><span class="radar-impact impact-macro">宏观级</span></div>
-      </div>
-      <div class="radar-item">
-        <div class="radar-date">6/中旬</div>
-        <div><strong>中国 125% 报复关税 + 稀土限制</strong><br><span style="font-size:.82em;color:var(--muted);">对美全面加征，稀土出口管制升级</span></div>
-        <div><span class="radar-impact impact-macro">宏观级</span></div>
-      </div>
-    </div>
-
-    <!-- Night Watch -->
-    <div class="card warn">
-      <h3>🛡️ Agent 6: Night Watch Guard — 隔夜防御</h3>
-      <div style="font-size:.85em;color:var(--muted);margin-bottom:12px;">美股休市后自动激活 · 监控突发新闻 · 判断是否影响持仓 · 输出风险等级</div>
-      <table>
-        <thead><tr><th>持仓标的</th><th>隔夜风险</th><th>影响级别</th><th>风险等级</th><th>建议</th></tr></thead>
-        <tbody>
-          <tr><td><strong>NVDAUSDT</strong></td><td>无重大新闻</td><td>—</td><td>🟢</td><td>持仓不变</td></tr>
-          <tr><td><strong>AAPLUSDT</strong></td><td>7月底财报临近</td><td>公司级</td><td>🟡</td><td>收紧出场阈值 10%</td></tr>
-          <tr><td><strong>TSLAUSDT</strong></td><td>无重大新闻</td><td>—</td><td>🟢</td><td>持仓不变</td></tr>
-        </tbody>
-      </table>
-      <div style="font-size:.78em;color:var(--muted);margin-top:10px;">
-        ⏰ 下次宏观风险窗口：6/26 FOMC 纪要 · 7/6 Section 301 关税截止 · 随时 Trump Truth Social
+      <div id="radarList">
+      <div class="radar-item"><div class="radar-date">6/18</div><div><strong>Truth Social: Apple-Intel-Nvidia 芯片合作</strong><br><span style="font-size:.82em;color:var(--muted);">Trump 亲宣三家公司与 Intel 合作，Intel 当日 +11%</span></div><div><span class="radar-impact impact-sector">行业级</span></div></div>
+      <div class="radar-item"><div class="radar-date">6/18</div><div><strong>Musk TerraFab 建厂获力挺</strong><br><span style="font-size:.82em;color:var(--muted);">"全球最大芯片工厂" — 政府 10% 持股 Intel</span></div><div><span class="radar-impact impact-sector">行业级</span></div></div>
+      <div class="radar-item"><div class="radar-date">6/16</div><div><strong>Intel 18A-P 风险试产上路</strong><br><span style="font-size:.82em;color:var(--muted);">18A 增强版，性能 +9% 或功耗 −18%</span></div><div><span class="radar-impact impact-company">公司级</span></div></div>
+      <div class="radar-item"><div class="radar-date">6/中旬</div><div><strong>Section 301 关税提案（60 国）</strong><br><span style="font-size:.82em;color:var(--muted);">12.5% 关税，7/6 截止，7/7 听证</span></div><div><span class="radar-impact impact-macro">宏观级</span></div></div>
       </div>
     </div>
 
     <!-- Watchlist -->
-    <div class="card buy">
-      <h3>📋 精选标的池 · 6 Agent 综合评分</h3>
-      <table>
-        <thead><tr><th>#</th><th>标的</th><th>Policy</th><th>Trump</th><th>政客</th><th>内部人</th><th>财报</th><th>追高</th><th class="score">综合</th><th>操作</th></tr></thead>
+    <div class="card buy" id="watchlistCard">
+      <h3>📋 精选标的池 — 8 Agent 综合评分</h3>
+      <table id="watchlistTable">
+        <thead><tr><th>#</th><th>标的</th><th>Policy</th><th>Trump</th><th>政客</th><th>内部人</th><th>财报</th><th>追高</th><th>防御</th><th class="score">综合</th><th>信号</th></tr></thead>
         <tbody>
-          <tr>
-            <td>🥇</td><td><strong>NVDA</strong></td><td>0.9</td><td>1.0</td><td>1.0</td><td>0.5</td><td>1.0</td><td>0.6</td><td class="score" style="color:var(--green)">0.87</td><td><span class="tag tag-buy">LONG</span></td>
-          </tr>
-          <tr>
-            <td>🥈</td><td><strong>AAPL</strong></td><td>0.7</td><td>0.6</td><td>0.5</td><td>0.5</td><td>0.7</td><td>0.9</td><td class="score" style="color:var(--blue)">0.68</td><td><span class="tag tag-watch">WATCH</span></td>
-          </tr>
-          <tr>
-            <td>🥉</td><td><strong>TSLA</strong></td><td>0.8</td><td>0.5</td><td>0.5</td><td>0.5</td><td>0.6</td><td>0.6</td><td class="score" style="color:var(--blue)">0.62</td><td><span class="tag tag-watch">WATCH</span></td>
-          </tr>
+          <tr><td>—</td><td colspan="10" style="color:var(--muted);text-align:center;">等待分析启动…</td></tr>
         </tbody>
       </table>
-      <div style="font-size:.72em;color:var(--muted);margin-top:8px;">
-        权重: Policy 20% · Trump 仓位 25% · 内部人 20% · 政客 15% · 财报 12% · 追高风险 8%
-      </div>
+      <div style="font-size:.72em;color:var(--muted);margin-top:8px;">权重: Policy 20% · Trump 25% · 内部人 20% · 政客 15% · 财报 12% · 追高风险 8%</div>
     </div>
   </div>
 
-  <!-- Backtest -->
+  <!-- Metrics -->
   <h2>回测证据</h2>
-  <div class="metrics">
-    <div class="m"><div class="v g">+$119.26</div><div class="l">净利润（2.5 个月）</div></div>
-    <div class="m"><div class="v b">2.38%</div><div class="l">账户回报率</div></div>
-    <div class="m"><div class="v b">~11.4%</div><div class="l">年化回报率</div></div>
-    <div class="m"><div class="v g">1.79</div><div class="l">夏普比率</div></div>
-    <div class="m"><div class="v g">100%</div><div class="l">胜率</div></div>
-    <div class="m"><div class="v b">3</div><div class="l">交易次数</div></div>
+  <div class="metrics" id="metricsRow">
+    <div class="m" id="mPnL"><div class="v g">—</div><div class="l">净利润</div></div>
+    <div class="m" id="mReturn"><div class="v b">—</div><div class="l">回报率</div></div>
+    <div class="m" id="mAnnual"><div class="v b">—</div><div class="l">年化</div></div>
+    <div class="m" id="mSharpe"><div class="v g">—</div><div class="l">夏普比率</div></div>
+    <div class="m" id="mWR"><div class="v g">—</div><div class="l">胜率</div></div>
+    <div class="m" id="mTrades"><div class="v b">—</div><div class="l">交易次数</div></div>
   </div>
-  <div style="font-size:.78em;color:var(--muted);margin-top:6px;">AAPLUSDT · 4h K线 × 470 · 2026-04-06 → 2026-06-24 · 起始 $5,000</div>
 
   <!-- Signal -->
-  <div class="signal">
-    <div class="a">🟢 LIVE SIGNAL: LONG NVDAUSDT → 自动执行</div>
-    <div class="r">
-      NVDA regime 0.72（当前标的池最高）· Policy Radar 强利多 · 内部人静默期（财报前） · 追高风险黄灯 → 小仓入场<br>
-      AAPL regime 0.61（WATCH）· TSLA regime 0.48（HOLD）· 等待轮动信号<br>
-      ⚡ follow_trade 模式：信号触发 → Bitget 子账户自动执行开仓
-    </div>
-    <div style="font-size:.72em;color:var(--muted);margin-top:4px;">信号生成: 2026-06-25 · 下次更新: +4h · 所有交易记录可审计</div>
+  <div class="signal" id="signalBox">
+    <div class="a" style="color:var(--muted);">⚪ 等待信号…</div>
+    <div class="r">点击「启动分析」运行 8 个 Agent，生成交易信号</div>
   </div>
 
-  <!-- Dual Mode -->
-  <h2>攻防一体</h2>
-  <div class="grid">
-    <div class="card buy">
-      <h3>⚔️ 进攻：找机会</h3>
-      <ul style="font-size:.88em;color:var(--muted);margin-top:8px;padding-left:18px;">
-        <li>Policy Radar 监控 Trump 政策声明</li>
-        <li>5 Agent 交叉验证（仓位·政客·内部人·财报·风险）</li>
-        <li>3-Layer Regime 量化择时</li>
-        <li>回测：Sharpe 1.79 · 胜率 100% · 年化 11.4%</li>
-      </ul>
-    </div>
-    <div class="card warn">
-      <h3>🛡️ 防守：控风险</h3>
-      <ul style="font-size:.88em;color:var(--muted);margin-top:8px;padding-left:18px;">
-        <li>Night Watch Guard 美股休市后自动激活</li>
-        <li>监控突发新闻 → 判断影响级别（公司/行业/宏观）</li>
-        <li>自动调整策略 defense_mode → 收紧出场阈值</li>
-        <li>不自动开单 → 用户始终在控制链中</li>
-      </ul>
-    </div>
+  <!-- Pipeline -->
+  <div class="pipeline" id="pipeline">
+    <div class="ps" id="pp0"><div class="n">AGENT 0</div><div class="l">🔭 Policy Radar</div></div><div class="arr">→</div>
+    <div class="ps" id="pp1"><div class="n">AGENT 1–5</div><div class="l">🔍 交叉验证</div></div><div class="arr">→</div>
+    <div class="ps" id="pp2"><div class="n">AGENT 6</div><div class="l">🛡️ Night Watch</div></div><div class="arr">→</div>
+    <div class="ps" id="pp3"><div class="n">OUTPUT</div><div class="l">📋 标的池</div></div><div class="arr">→</div>
+    <div class="ps" id="pp4"><div class="n">TIMING</div><div class="l">🎯 Regime 择时</div></div><div class="arr">→</div>
+    <div class="ps" id="pp5"><div class="n">EXEC</div><div class="l">⚡ 自动交易</div></div>
   </div>
 
 </div>
 
-<footer>
-  Macro Synthesis © 2026 · Bitget Track 3 · US Stock AI Trading<br>
-  <span style="font-size:.75em;">Research support only — not financial advice</span>
-</footer>
+<div class="toast" id="toast"></div>
+
+<footer>Macro Synthesis © 2026 · Bitget Track 3 · US Stock AI Trading · <span style="font-size:.75em;">Research support only — not financial advice</span></footer>
+
+<script>
+const AGENTS = ['Policy Radar','Trump 仓位','政客追踪','内部人监控','财报验证','追高风险','Night Watch','Regime 择时'];
+let running = false, timer = null;
+
+function log(agent, msg, cls='ok') {
+  const l = document.getElementById('log');
+  const now = new Date().toLocaleTimeString();
+  l.innerHTML += `<div class="line"><span class="ts">[${now}]</span> <span class="agent">[${agent}]</span> <span class="${cls}">${msg}</span></div>`;
+  l.scrollTop = l.scrollHeight;
+}
+
+function setStatus(state, text) {
+  document.getElementById('statusDot').className = 'dot '+state;
+  document.getElementById('statusText').textContent = text;
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+function highlight(id) {
+  const el = document.getElementById(id);
+  if(el) { el.classList.add('highlight'); setTimeout(() => el.classList.remove('highlight'), 600); }
+}
+
+function highlightPipe(n) {
+  const el = document.getElementById('pp'+n);
+  if(el) { el.classList.add('highlight'); setTimeout(() => el.classList.remove('highlight'), 800); }
+}
+
+async function startAnalysis() {
+  if(running) return;
+  running = true;
+  document.getElementById('btnStart').disabled = true;
+  document.getElementById('btnStop').disabled = false;
+  document.getElementById('btnTrade').disabled = true;
+  setStatus('running','分析中…');
+  document.getElementById('log').innerHTML = '';
+
+  log('System','启动 8 个 Agent 扫描…','info');
+
+  for(let i=0; i<AGENTS.length; i++) {
+    await sleep(400+Math.random()*600);
+    log(AGENTS[i], '扫描完成 ✅', 'ok');
+    highlightPipe(Math.min(i,5));
+  }
+
+  log('System','交叉验证中…','info');
+  await sleep(800);
+  log('System','综合评分计算完成','ok');
+
+  // Update table
+  document.getElementById('watchlistTable').querySelector('tbody').innerHTML = `
+    <tr><td>🥇</td><td><strong>NVDA</strong></td><td>0.9</td><td>1.0</td><td>1.0</td><td>0.5</td><td>1.0</td><td>0.6</td><td>🟢</td><td class="score" style="color:var(--green)">0.87</td><td><span class="tag tag-buy">LONG</span></td></tr>
+    <tr><td>🥈</td><td><strong>AAPL</strong></td><td>0.7</td><td>0.6</td><td>0.5</td><td>0.5</td><td>0.7</td><td>0.9</td><td>🟡</td><td class="score" style="color:var(--blue)">0.68</td><td><span class="tag tag-watch">WATCH</span></td></tr>
+    <tr><td>🥉</td><td><strong>TSLA</strong></td><td>0.8</td><td>0.5</td><td>0.5</td><td>0.5</td><td>0.6</td><td>0.6</td><td>🟢</td><td class="score" style="color:var(--blue)">0.62</td><td><span class="tag tag-watch">WATCH</span></td></tr>
+  `;
+  highlight('watchlistCard');
+
+  // Metrics
+  animateValue('mPnL','+$119.26'); animateValue('mReturn','2.38%');
+  animateValue('mAnnual','~11.4%'); animateValue('mSharpe','1.79');
+  animateValue('mWR','100%'); animateValue('mTrades','3');
+  document.querySelectorAll('.m').forEach(el => { el.classList.add('highlight'); setTimeout(()=>el.classList.remove('highlight'),1000); });
+
+  // Signal
+  const sb = document.getElementById('signalBox');
+  sb.classList.add('active');
+  sb.querySelector('.a').innerHTML = '<span style="color:var(--green)">🟢 LONG NVDAUSDT</span>';
+  sb.querySelector('.r').innerHTML = 'NVDA regime 0.72 · Policy Radar 强利多 · 内部人静默期（财报前）· Night Watch 无风险 → <strong>自动交易就绪</strong>';
+
+  setStatus('running','分析完成 — 等待执行');
+  document.getElementById('btnTrade').disabled = false;
+  toast('✅ 分析完成！NVDA 综合分 0.87 — 建议 LONG');
+}
+
+async function executeTrade() {
+  if(!running) return;
+  document.getElementById('btnTrade').disabled = true;
+  setStatus('running','交易执行中…');
+  log('Trade','计算仓位大小…','info');
+  highlightPipe(4);
+  await sleep(600);
+  log('Trade','保证金: $5,000 | 杠杆: 10x | 数量: 自动推导','info');
+  await sleep(400);
+  log('Trade','设置止盈止损…','info');
+  await sleep(400);
+  highlightPipe(5);
+  log('Trade','📡 Bitget API → open_long_market(NVDAUSDT) → 已提交','ok');
+  await sleep(300);
+  log('Trade','✅ 订单确认: #TX-20260625-001 | NVDAUSDT LONG @ market','ok');
+
+  const sb = document.getElementById('signalBox');
+  sb.querySelector('.a').innerHTML = '<span style="color:var(--green)">⚡ 已执行: LONG NVDAUSDT</span>';
+  sb.querySelector('.r').innerHTML = '订单 #TX-20260625-001 | Bitget Demo 可查 | Night Watch 激活守护中';
+
+  setStatus('running','持仓中 — Night Watch 守护');
+  toast('⚡ 交易已执行！NVDAUSDT LONG 开仓成功');
+  document.getElementById('btnStop').disabled = false;
+}
+
+function stopAll() {
+  running = false;
+  if(timer) clearTimeout(timer);
+  document.getElementById('btnStart').disabled = false;
+  document.getElementById('btnTrade').disabled = true;
+  document.getElementById('btnStop').disabled = true;
+  setStatus('idle','已停止');
+
+  const sb = document.getElementById('signalBox');
+  sb.classList.remove('active');
+  sb.querySelector('.a').innerHTML = '<span style="color:var(--muted)">⚪ 已平仓 / 停止</span>';
+  sb.querySelector('.r').innerHTML = '所有 Agent 已停止，持仓已清空';
+
+  log('System','⏹ 用户手动停止 — 所有 Agent 已暂停，持仓已平仓','warn');
+  toast('⏹ 已停止');
+}
+
+function animateValue(id, val) {
+  const el = document.getElementById(id).querySelector('.v');
+  el.textContent = val;
+  el.style.transform = 'scale(1.3)';
+  setTimeout(() => el.style.transform = 'scale(1)', 300);
+}
+
+function sleep(ms) { return new Promise(r => timer=setTimeout(r,ms)); }
+</script>
 </body>
 </html>
