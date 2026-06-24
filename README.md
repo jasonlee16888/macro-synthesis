@@ -64,11 +64,11 @@ Truth Social · 白宫简报 · 行政令
 
 ## 📋 当前精选标的池（2026-06-25）
 
-| 排名 | 标的 | 综合分 | Policy | Trump | 政客 | 内部人 | 财报 | 追高 | 信号 |
-|---|---|---|---|---|---|---|---|---|---|
-| 🥇 | **NVDA** 英伟达 | **0.87** | 0.9 | 1.0 | 1.0 | 0.5 | 1.0 | 0.6 | 🟢 LONG |
-| 🥈 | **AAPL** 苹果 | **0.68** | 0.7 | 0.6 | 0.5 | 0.5 | 0.7 | 0.9 | 🟡 WATCH |
-| 🥉 | **TSLA** 特斯拉 | **0.62** | 0.8 | 0.5 | 0.5 | 0.5 | 0.6 | 0.6 | 🟡 WATCH |
+| 排名 | 标的 | 综合分 | Policy | Trump | 政客 | 内部人 | 财报 | 追高 | Night Watch | 信号 |
+|---|---|---|---|---|---|---|---|---|---|---|---|
+| 🥇 | **MU** 美光 | **0.82** | 0.9 | 0.8 | 0.7 | 0.5 | 1.0 | 0.7 | 🟢 | 🟢 LONG |
+| 🥈 | **NVDA** 英伟达 | **0.80** | 0.9 | 1.0 | 1.0 | 0.5 | 1.0 | 0.6 | 🟢 | 🟡 WATCH |
+| 🥉 | **AAPL** 苹果 | **0.65** | 0.7 | 0.6 | 0.5 | 0.5 | 0.7 | 0.9 | 🟡 | 🟡 WATCH |
 
 ---
 
@@ -98,7 +98,7 @@ macro-synthesis/
 ├── README.md                         ← 本文
 ├── demo/
 │   └── index.html                    ← 展示页面
-├── trump-trades-squad/               ← 6 Agent 选股系统
+├── trump-trades-squad/               ← 8 Agent 选股系统
 │   ├── SKILL.md                      ← Claude Code 可运行 skill
 │   ├── agents/
 │   │   ├── policy-radar.md           ← Agent 0: 政策雷达
@@ -124,8 +124,8 @@ macro-synthesis/
 
 ## 🔗 链接
 
-- **Live Demo**: [demo/index.html](demo/index.html)
-- **GetAgent Playbook**: `c06c60dd-3fbe-4b97-bb84-9a1e03d52051` @ Bitget Studio
+- **Live Demo**: https://jasonlee16888.github.io/macro-synthesis/
+- **GetAgent Playbook**: `632fd0e0` v0.1.0 @ Bitget Studio（MUUSDT）
 - **TrumpTrades Dashboard**: http://trumpdash-bi5bu2dn.manus.space
 
 ---
