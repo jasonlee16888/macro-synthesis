@@ -21,18 +21,18 @@ class MacroRegimeStrategyConfig(StrategyConfig):
     instrument_ids: tuple[InstrumentId, ...] = ()
     bar_types: tuple[BarType, ...] = ()
     trade_size: str = "0.01"
-    volatility_lookback: int = 20
-    trend_fast: int = 12
-    trend_slow: int = 26
-    momentum_period: int = 10
-    volatility_weight: float = 0.35
-    trend_weight: float = 0.35
+    volatility_lookback: int = 10
+    trend_fast: int = 4
+    trend_slow: int = 12
+    momentum_period: int = 6
+    volatility_weight: float = 0.25
+    trend_weight: float = 0.45
     momentum_weight: float = 0.30
-    regime_threshold_risk_on: float = 0.65
-    regime_threshold_risk_off: float = 0.35
-    rotation_margin: float = 0.08
-    hysteresis: float = 0.04
-    memory_decay: float = 0.002
+    regime_threshold_risk_on: float = 0.50
+    regime_threshold_risk_off: float = 0.38
+    rotation_margin: float = 0.06
+    hysteresis: float = 0.02
+    memory_decay: float = 0.003
     rate_regime: float = 0.5
     defense_mode: float = 0.0  # 0=normal, 1=full defense (from Night Watch)
 

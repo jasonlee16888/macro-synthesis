@@ -44,7 +44,7 @@ def run_backtest() -> None:
     global RATE_REGIME
 
     cfg = runtime.manifest.get("strategy_config", {}) or {}
-    symbols = cfg.get("trading_symbols") or ["AAPLUSDT"]
+    symbols = cfg.get("trading_symbols") or ["NVDAUSDT"]
 
     # ------------------------------------------------------------------
     # 1. Fetch rate regime from FRED
@@ -152,7 +152,7 @@ def run_live() -> None:
     RATE_REGIME = rate_regime.fetch_and_compute(data)
 
     cfg = runtime.manifest.get("strategy_config", {}) or {}
-    symbols = cfg.get("trading_symbols") or ["AAPLUSDT"]
+    symbols = cfg.get("trading_symbols") or ["NVDAUSDT"]
     interval = "4h"
 
     # --- Build live regime signals for all symbols ---

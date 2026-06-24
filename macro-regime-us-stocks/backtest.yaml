@@ -12,34 +12,31 @@ strategy:
   config_class: MacroRegimeStrategyConfig
   config:
     order_id_tag: "001"
-    trade_size: "50"
-    volatility_lookback: 14
-    trend_fast: 6
-    trend_slow: 20
-    momentum_period: 8
+    trade_size: "0.01"
+    volatility_lookback: 10
+    trend_fast: 4
+    trend_slow: 12
+    momentum_period: 6
     volatility_weight: 0.25
     trend_weight: 0.45
     momentum_weight: 0.30
-    regime_threshold_risk_on: 0.35
-    regime_threshold_risk_off: 0.10
-    rotation_margin: 0.08
-    hysteresis: 0.04
-    memory_decay: 0.002
+    regime_threshold_risk_on: 0.50
+    regime_threshold_risk_off: 0.38
+    rotation_margin: 0.06
+    hysteresis: 0.02
+    memory_decay: 0.003
     rate_regime: 0.5
-
-execution:
-  start: "2026-04-01T00:00:00Z"
-  end: "2026-06-24T00:00:00Z"
+    defense_mode: 0.0
 
 execution:
   start: "2026-04-01T00:00:00Z"
   end: "2026-06-24T00:00:00Z"
 
 instrument:
-  id: AAPLUSDT.BINANCE
+  id: MUUSDT.BINANCE
   kind: perpetual
-  raw_symbol: AAPLUSDT
-  base_currency: AAPL
+  raw_symbol: MUUSDT
+  base_currency: MU
   quote_currency: USDT
   settlement_currency: USDT
   price_precision: 2
@@ -49,4 +46,4 @@ instrument:
   lot_size: "0.001"
   maker_fee: "0.0002"
   taker_fee: "0.0005"
-  bar_type: AAPLUSDT.BINANCE-4-HOUR-LAST-EXTERNAL
+  bar_type: MUUSDT.BINANCE-4-HOUR-LAST-EXTERNAL

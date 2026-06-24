@@ -46,7 +46,7 @@ long_description: |
   with capital you can afford to draw down.
 
 market_type: contract
-trading_symbols: ["AAPLUSDT"]
+trading_symbols: ["MUUSDT"]
 tags: ["rwa", "us-stocks", "macro", "regime", "rotation", "multi-symbol", "rate-cycle", "contract"]
 schedule:
   cron: "0 */4 * * *"
@@ -59,20 +59,21 @@ execution_mode: follow_trade
 follow_trade_supported: true
 
 strategy_config:
-  trading_symbols: ["AAPLUSDT"]
-  volatility_lookback: 14
-  trend_fast: 6
-  trend_slow: 20
-  momentum_period: 8
+  trading_symbols: ["MUUSDT"]
+  volatility_lookback: 10
+  trend_fast: 4
+  trend_slow: 12
+  momentum_period: 6
   volatility_weight: 0.25
   trend_weight: 0.45
   momentum_weight: 0.30
-  regime_threshold_risk_on: 0.35
-  regime_threshold_risk_off: 0.10
-  rotation_margin: 0.08
-  hysteresis: 0.06
-  memory_decay: 0.0008
+  regime_threshold_risk_on: 0.50
+  regime_threshold_risk_off: 0.38
+  rotation_margin: 0.06
+  hysteresis: 0.02
+  memory_decay: 0.003
   rate_regime: 0.5
+  defense_mode: 0.0
   leverage: 10
   margin_budget: "5000"
 
