@@ -309,49 +309,40 @@ function sleep(ms) { return new Promise(r => timer=setTimeout(r,ms)); }
 if(location.search.includes('demo=auto')) {
   document.addEventListener('DOMContentLoaded', async () => {
     const narration = document.createElement('div');
-    narration.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 24px;border-radius:8px;font-size:1.1em;z-index:1000;text-align:center;transition:all .4s;pointer-events:none;';
+    narration.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 24px;border-radius:8px;font-size:1.2em;z-index:1000;text-align:center;transition:all .4s;pointer-events:none;';
     document.body.appendChild(narration);
 
-    const say = (t) => { narration.textContent = t; narration.style.opacity = 1; };
+    const speak = (text) => new Promise(resolve => {
+      const u = new SpeechSynthesisUtterance(text);
+      u.lang = 'zh-CN'; u.rate = 0.92;
+      u.onend = resolve; u.onerror = resolve;
+      speechSynthesis.cancel(); speechSynthesis.speak(u);
+    });
 
-    await sleep(500);
-    say('🎬 Macro Synthesis — 完整演示开始');
-    await sleep(2000);
+    const say = async (t) => { narration.textContent = t; await speak(t); await sleep(300); };
 
-    say('🔭 Agent 0: Policy Radar — 扫描 Trump 政策信号');
-    await sleep(1500);
-    say('📊 Agent 1-5: 交叉验证 — Trump 仓位 × 政客 × 内部人 × 财报 × 追高风险');
-    await sleep(2000);
-    say('🛡️ Agent 6: Night Watch — 隔夜风险检查…无风险 ✅');
-    await sleep(1500);
-    say('📋 精选标的池: 🥇 MU 0.82 🥈 NVDA 0.80 🥉 AAPL 0.65');
-    await sleep(2000);
+    await sleep(800);
+    await say('欢迎观看 Macro Synthesis 完整演示。这是一个面向美股交易的 8 Agent AI 投资系统，结合 Trump 政策雷达与量化 regime 择时引擎。');
+    await say('首先，Policy Radar 政策雷达开始扫描。它实时监控 Trump Truth Social、白宫行政令和关税政策，自动映射到受影响的具体股票。');
+    await say('最近一条重磅信号：6月18号，Trump 宣布 Apple、Intel、Nvidia 芯片合作。作为 AI 芯片 HBM 内存核心供应商，Micron 当天暴涨百分之11。这正是 Policy Radar 的核心价值——在政策发布的第一时间识别受益标的。');
+    await say('接下来，Agent 1 到 5 执行交叉验证。Trump Q1 仓位、国会议员交易、内部人买入、财报验证、追高风险——五个独立信号源加权打分，确保不是单一信号驱动的冲动交易。');
+    await say('Night Watch 隔夜守护激活。扫描所有持仓的隔夜风险，当前无风险信号。');
 
-    // Start music & analysis
     const bgm = document.getElementById('bgm');
     if(bgm) { bgm.volume = 0.12; bgm.play().catch(()=>{}); }
     document.getElementById('btnStart').click();
-    await sleep(6000);
+    await sleep(7000);
 
-    say('🏆 MU 综合分 0.82 排第一 — 触发交易信号');
-    await sleep(1500);
-    say('🎯 Regime 择时: 波动率结构 + 趋势方向 + 动量持续性 → 确认入场');
-    await sleep(2000);
+    await say('8 个 Agent 全部扫描完成。精选标的池出炉：第一名 Micron，综合分 0.82。第二名 Nvidia，0.80。第三名 Apple，0.65。');
+    await say('Micron 综合分 0.82 排名第一，触发交易信号。Regime 择时引擎确认：三层评分全部指向 risk-on——波动率收缩、趋势多头对齐、动量持续确认。入场条件满足。');
 
-    // Click Execute Trade
     document.getElementById('btnTrade').click();
-    await sleep(4000);
+    await sleep(5000);
 
-    say('⚡ 自动交易: open_long_market(MUUSDT) → Bitget 实盘下单 → 已成交 ✅');
-    await sleep(2000);
-    say('🛡️ Night Watch 自动激活 — 全天候守护持仓');
-    await sleep(2000);
-
-    say('📊 回测证据: +$551 | Sharpe 2.20 | 12 trades | 胜率 66.7% | 年化 ~53%');
-    await sleep(3000);
-
-    say('🎬 Macro Synthesis — 8 Agent 选股 + AI 择时 + 自动交易');
-    await sleep(2000);
+    await say('点击执行交易。系统自动计算仓位大小、设置止盈止损，调用 Bitget API 提交市价多单。订单号已生成，可在 Bitget Demo 页面实时核验。');
+    await say('Night Watch Guard 自动激活，全天候守护持仓。如果隔夜出现重大新闻或政策变化，系统会自动收紧风控参数或发出平仓建议。');
+    await say('最后，回测数据验证策略有效性。在过去 2.5 个月的回测窗口中，Micron 标的实现净利润 551 美元，回报率百分之11，年化回报约百分之53，夏普比率 2.20，利润因子 9.63，12 笔交易，胜率百分之67。');
+    await say('总结：Macro Synthesis 是一个攻防一体的 8 Agent AI 投资系统。Policy Radar 找政策信号，5 Agent 交叉验证选股，Night Watch 隔夜防御，Regime 引擎量化择时，follow trade 自动执行。谢谢观看。');
 
     narration.style.opacity = '0';
     await sleep(500);
