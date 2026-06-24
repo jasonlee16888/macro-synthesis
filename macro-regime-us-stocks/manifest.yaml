@@ -55,8 +55,8 @@ schedule:
 decision_mode: deterministic
 backtest_support: full
 runtime_profile: deterministic
-execution_mode: signal_only
-follow_trade_supported: false
+execution_mode: follow_trade
+follow_trade_supported: true
 
 strategy_config:
   trading_symbols: ["AAPLUSDT"]

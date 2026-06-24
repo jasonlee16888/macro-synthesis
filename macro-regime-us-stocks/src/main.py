@@ -12,7 +12,7 @@ from typing import Any, Optional
 
 from getagent import backtest, data, runtime
 
-from . import rate_regime
+from . import live_trading, rate_regime
 
 # Module-level global so strategy.py can read it.
 RATE_REGIME: float = 0.5
@@ -147,19 +147,72 @@ def run_backtest() -> None:
 
 
 def run_live() -> None:
+    """Live trading path — fetch klines, compute regime, emit signal or auto-trade."""
     global RATE_REGIME
     RATE_REGIME = rate_regime.fetch_and_compute(data)
 
     cfg = runtime.manifest.get("strategy_config", {}) or {}
     symbols = cfg.get("trading_symbols") or ["AAPLUSDT"]
-    symbol = symbols[0]
+    interval = "4h"
 
-    runtime.emit_signal(
-        action="watch",
-        symbol=symbol,
-        confidence=0.0,
-        metrics={"status": "live_cron_reserved", "rate_regime": RATE_REGIME},
-        meta={"reason": "live path reserved for scheduled execution"},
+    # --- Build live regime signals for all symbols ---
+    signals: dict[str, float] = {}
+    for symbol in symbols:
+        try:
+            bars = data.crypto.futures.kline(symbol=symbol, interval=interval, limit=100)
+            if bars is None:
+                continue
+            frame = data.to_dataframe(bars)
+            if frame is None or frame.empty:
+                continue
+
+            sig_gen = live_trading.LiveRegimeSignal(cfg)
+            regime = None
+            for _, row in frame.iterrows():
+                regime = sig_gen.feed_bar(
+                    float(row.get("close", 0)),
+                    float(row.get("high", 0)),
+                    float(row.get("low", 0)),
+                )
+            if regime is not None:
+                signals[symbol] = regime
+        except Exception:
+            continue
+
+    if not signals:
+        runtime.emit_signal(
+            action="watch", symbol=symbols[0], confidence=0.0,
+            metrics={"rate_regime": RATE_REGIME, "signals": 0},
+            meta={"reason": "no live regime signals computed"},
+        )
+        return
+
+    # --- Select best symbol ---
+    best_symbol, best_regime = max(signals.items(), key=lambda x: x[1])
+    entry_th = cfg.get("regime_threshold_risk_on", 0.35)
+
+    defense = cfg.get("defense_mode", 0.0)
+    entry_th_adj = entry_th * (1.0 + defense * 0.2)
+
+    action = "long" if best_regime > entry_th_adj else "watch"
+    confidence = best_regime
+
+    def _do_trade():
+        return live_trading.execute_long(best_symbol, cfg)
+
+    runtime.emit_signal_or_follow(
+        action=action,
+        symbol=best_symbol,
+        confidence=confidence,
+        metrics={
+            "rate_regime": RATE_REGIME,
+            "defense_mode": defense,
+            "best_regime": best_regime,
+            "entry_threshold": entry_th_adj,
+            "all_signals": signals,
+        },
+        meta={"source": "live_cron"},
+        execute_trade=_do_trade if action == "long" else None,
     )
 
 
