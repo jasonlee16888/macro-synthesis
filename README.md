@@ -1,4 +1,4 @@
-# Macro Synthesis — 6-Agent Trump Policy Radar × AI Regime Rotation
+# Macro Synthesis — 8-Agent Trump Policy Radar × AI Regime Auto-Trading
 
 > **Bitget Track 3 · US Stock AI Trading**
 >
@@ -76,17 +76,18 @@ Truth Social · 白宫简报 · 行政令
 
 | 指标 | 数值 |
 |---|---|
-| 净利润 | **+$119.26**（2.5 个月） |
-| 账户回报率 | **2.38%** |
-| 年化回报率 | **~11.4%** |
-| 夏普比率 | **1.79** |
-| 胜率 | **100%** |
-| 交易次数 | 3 |
-| 标的 | AAPLUSDT |
+| 净利润 | **+$551.02**（2.5 个月） |
+| 回报率 | **11.02%** |
+| 年化回报率 | **~53%** |
+| 夏普比率 | **2.20** |
+| 利润因子 | **9.63** |
+| 胜率 | **66.7%** |
+| 交易次数 | **12** |
+| 标的 | **MUUSDT**（Micron Technology） |
 | 回测窗口 | 2026-04-06 → 2026-06-24 |
-| K 线 | 4h × 470 |
+| K 线 | 4h × ~470 |
 
-> Playbook 已发布至 GetAgent Studio。回测记录可在 Playbook run history 中验证。
+> Playbook 已发布至 GetAgent Studio v0.1.0。Run ID: pbrun-70161c53cb69
 
 ---
 
