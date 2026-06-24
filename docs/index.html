@@ -316,10 +316,21 @@ if(location.search.includes('demo=auto')) {
 
   splash.addEventListener('click', async () => {
     splash.remove();
-    // Test speech
-    const test = new SpeechSynthesisUtterance(' ');
-    test.volume = 0; test.lang = 'zh-CN';
-    speechSynthesis.speak(test);
+
+    // Load voices — must wait for them
+    let voices = speechSynthesis.getVoices();
+    if (!voices.length) {
+      await new Promise(r => { speechSynthesis.onvoiceschanged = r; });
+      voices = speechSynthesis.getVoices();
+    }
+    const zhVoice = voices.find(v => v.lang.startsWith('zh')) || voices[0];
+    window.__demoVoice = zhVoice;
+
+    // Warm up audio context with audible test
+    const test = new SpeechSynthesisUtterance('演示开始');
+    test.voice = zhVoice; test.volume = 0.6;
+    await new Promise(r => { test.onend = r; test.onerror = r; speechSynthesis.speak(test); });
+    await sleep(600);
 
     const narration = document.createElement('div');
     narration.style.cssText = 'position:fixed;top:12px;left:50%;transform:translateX(-50%);background:rgba(0,0,0,.85);color:#fff;padding:10px 24px;border-radius:8px;font-size:1.2em;z-index:1000;text-align:center;transition:all .4s;pointer-events:none;';
@@ -327,9 +338,10 @@ if(location.search.includes('demo=auto')) {
 
     const speak = (text) => new Promise(resolve => {
       const u = new SpeechSynthesisUtterance(text);
-      u.lang = 'zh-CN'; u.rate = 0.92;
+      u.voice = window.__demoVoice || null;
+      u.lang = 'zh-CN'; u.rate = 0.88; u.volume = 1;
       u.onend = resolve; u.onerror = resolve;
-      speechSynthesis.cancel(); speechSynthesis.speak(u);
+      speechSynthesis.speak(u);
     });
 
     const say = async (t) => { narration.textContent = t; await speak(t); await sleep(300); };
