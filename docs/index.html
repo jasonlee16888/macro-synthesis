@@ -222,9 +222,9 @@ async function startAnalysis() {
 
   // Update table
   document.getElementById('watchlistTable').querySelector('tbody').innerHTML = `
-    <tr><td>🥇</td><td><strong>NVDA</strong></td><td>0.9</td><td>1.0</td><td>1.0</td><td>0.5</td><td>1.0</td><td>0.6</td><td>🟢</td><td class="score" style="color:var(--green)">0.87</td><td><span class="tag tag-buy">LONG</span></td></tr>
-    <tr><td>🥈</td><td><strong>AAPL</strong></td><td>0.7</td><td>0.6</td><td>0.5</td><td>0.5</td><td>0.7</td><td>0.9</td><td>🟡</td><td class="score" style="color:var(--blue)">0.68</td><td><span class="tag tag-watch">WATCH</span></td></tr>
-    <tr><td>🥉</td><td><strong>TSLA</strong></td><td>0.8</td><td>0.5</td><td>0.5</td><td>0.5</td><td>0.6</td><td>0.6</td><td>🟢</td><td class="score" style="color:var(--blue)">0.62</td><td><span class="tag tag-watch">WATCH</span></td></tr>
+    <tr><td>🥇</td><td><strong>MU</strong></td><td>0.9</td><td>0.8</td><td>0.7</td><td>0.5</td><td>1.0</td><td>0.7</td><td>🟢</td><td class="score" style="color:var(--green)">0.82</td><td><span class="tag tag-buy">LONG</span></td></tr>
+    <tr><td>🥈</td><td><strong>NVDA</strong></td><td>0.9</td><td>1.0</td><td>1.0</td><td>0.5</td><td>1.0</td><td>0.6</td><td>🟢</td><td class="score" style="color:var(--blue)">0.80</td><td><span class="tag tag-watch">WATCH</span></td></tr>
+    <tr><td>🥉</td><td><strong>AAPL</strong></td><td>0.7</td><td>0.6</td><td>0.5</td><td>0.5</td><td>0.7</td><td>0.9</td><td>🟡</td><td class="score" style="color:var(--blue)">0.65</td><td><span class="tag tag-watch">WATCH</span></td></tr>
   `;
   highlight('watchlistCard');
 
@@ -237,12 +237,12 @@ async function startAnalysis() {
   // Signal
   const sb = document.getElementById('signalBox');
   sb.classList.add('active');
-  sb.querySelector('.a').innerHTML = '<span style="color:var(--green)">🟢 LONG NVDAUSDT</span>';
-  sb.querySelector('.r').innerHTML = 'NVDA regime 0.72 · Policy Radar 强利多 · 内部人静默期（财报前）· Night Watch 无风险 → <strong>自动交易就绪</strong>';
+  sb.querySelector('.a').innerHTML = '<span style="color:var(--green)">🟢 LONG MUUSDT</span>';
+  sb.querySelector('.r').innerHTML = 'MU regime 0.72 · Policy Radar 强利多 · 内部人静默期（财报前）· Night Watch 无风险 → <strong>自动交易就绪</strong>';
 
   setStatus('running','分析完成 — 等待执行');
   document.getElementById('btnTrade').disabled = false;
-  toast('✅ 分析完成！NVDA 综合分 0.87 — 建议 LONG');
+  toast('✅ 分析完成！MU 综合分 0.87 — 建议 LONG');
 }
 
 async function executeTrade() {
@@ -257,16 +257,16 @@ async function executeTrade() {
   log('Trade','设置止盈止损…','info');
   await sleep(400);
   highlightPipe(5);
-  log('Trade','📡 Bitget API → open_long_market(NVDAUSDT) → 已提交','ok');
+  log('Trade','📡 Bitget API → open_long_market(MUUSDT) → 已提交','ok');
   await sleep(300);
-  log('Trade','✅ 订单确认: #TX-20260625-001 | NVDAUSDT LONG @ market','ok');
+  log('Trade','✅ 订单确认: #TX-20260625-001 | MUUSDT LONG @ market','ok');
 
   const sb = document.getElementById('signalBox');
-  sb.querySelector('.a').innerHTML = '<span style="color:var(--green)">⚡ 已执行: LONG NVDAUSDT</span>';
+  sb.querySelector('.a').innerHTML = '<span style="color:var(--green)">⚡ 已执行: LONG MUUSDT</span>';
   sb.querySelector('.r').innerHTML = '订单 #TX-20260625-001 | Bitget Demo 可查 | Night Watch 激活守护中';
 
   setStatus('running','持仓中 — Night Watch 守护');
-  toast('⚡ 交易已执行！NVDAUSDT LONG 开仓成功');
+  toast('⚡ 交易已执行！MUUSDT LONG 开仓成功');
   document.getElementById('btnStop').disabled = false;
 }
 
