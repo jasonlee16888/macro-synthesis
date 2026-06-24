@@ -114,6 +114,7 @@
     <div class="card">
       <h3>🔭 Policy Radar — 活跃信号</h3>
       <div id="radarList">
+      <div class="radar-item"><div class="radar-date">6/18</div><div><strong>Truth Social: 芯片合作 → Micron +11%</strong><br><span style="font-size:.82em;color:var(--muted);">MU 是 HBM 内存核心供应商，AI 芯片扩产直接拉动需求</span></div><div><span class="radar-impact impact-company">公司级</span></div></div>
       <div class="radar-item"><div class="radar-date">6/18</div><div><strong>Truth Social: Apple-Intel-Nvidia 芯片合作</strong><br><span style="font-size:.82em;color:var(--muted);">Trump 亲宣三家公司与 Intel 合作，Intel 当日 +11%</span></div><div><span class="radar-impact impact-sector">行业级</span></div></div>
       <div class="radar-item"><div class="radar-date">6/18</div><div><strong>Musk TerraFab 建厂获力挺</strong><br><span style="font-size:.82em;color:var(--muted);">"全球最大芯片工厂" — 政府 10% 持股 Intel</span></div><div><span class="radar-impact impact-sector">行业级</span></div></div>
       <div class="radar-item"><div class="radar-date">6/16</div><div><strong>Intel 18A-P 风险试产上路</strong><br><span style="font-size:.82em;color:var(--muted);">18A 增强版，性能 +9% 或功耗 −18%</span></div><div><span class="radar-impact impact-company">公司级</span></div></div>
@@ -127,7 +128,9 @@
       <table id="watchlistTable">
         <thead><tr><th>#</th><th>标的</th><th>Policy</th><th>Trump</th><th>政客</th><th>内部人</th><th>财报</th><th>追高</th><th>防御</th><th class="score">综合</th><th>信号</th></tr></thead>
         <tbody>
-          <tr><td>—</td><td colspan="10" style="color:var(--muted);text-align:center;">等待分析启动…</td></tr>
+          <tr><td>🥇</td><td><strong>MU</strong></td><td>0.9</td><td>0.8</td><td>0.7</td><td>0.5</td><td>1.0</td><td>0.7</td><td>🟢</td><td class="score" style="color:var(--green)">0.82</td><td><span class="tag tag-buy">LONG</span></td></tr>
+          <tr><td>🥈</td><td><strong>NVDA</strong></td><td>0.9</td><td>1.0</td><td>1.0</td><td>0.5</td><td>1.0</td><td>0.6</td><td>🟢</td><td class="score" style="color:var(--blue)">0.80</td><td><span class="tag tag-watch">WATCH</span></td></tr>
+          <tr><td>🥉</td><td><strong>AAPL</strong></td><td>0.7</td><td>0.6</td><td>0.5</td><td>0.5</td><td>0.7</td><td>0.9</td><td>🟡</td><td class="score" style="color:var(--blue)">0.65</td><td><span class="tag tag-watch">WATCH</span></td></tr>
         </tbody>
       </table>
       <div style="font-size:.72em;color:var(--muted);margin-top:8px;">权重: Policy 20% · Trump 25% · 内部人 20% · 政客 15% · 财报 12% · 追高风险 8%</div>
@@ -242,7 +245,7 @@ async function startAnalysis() {
 
   setStatus('running','分析完成 — 等待执行');
   document.getElementById('btnTrade').disabled = false;
-  toast('✅ 分析完成！MU 综合分 0.87 — 建议 LONG');
+  toast('✅ 分析完成！MU 综合分 0.82 — 建议 LONG');
 }
 
 async function executeTrade() {
