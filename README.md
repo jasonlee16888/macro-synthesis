@@ -54,11 +54,13 @@ Truth Social · 白宫简报 · 行政令
 
 | 日期 | 政策事件 | 映射标的 | 方向 |
 |---|---|---|---|
-| 6/18 | Trump Truth Social: Apple-Intel-Nvidia 芯片合作 | NVDA↑ INTC↑ AAPL↑ | 🟢 |
+| 6/18 | Truth Social 芯片合作 → 半导体板块暴涨 | **MU↑11%** NVDA↑ INTC↑ AAPL↑ | 🟢 |
 | 6/18 | Musk TerraFab 建厂获 Trump 力挺 | TSLA↑ INTC↑ | 🟢 |
-| 6/16 | Intel 18A-P 风险试产 + 政府 9.9% 持股 | INTC↑ | 🟢 |
+| 6/16 | Intel 18A-P 风险试产 + 政府 9.9% 持股 | INTC↑ **MU↑**（HBM 内存需求） | 🟢 |
 | 6/中旬 | Section 301 关税提案（60 国 12.5%） | 宏观↓ | 🔴 |
 | 6/中旬 | 中国 125% 报复关税 + 稀土限制 | 芯片设备↓ | 🔴 |
+
+> **MU 映射逻辑**: Micron 是 AI 芯片 HBM 内存核心供应商。Trump 每一轮芯片政策利好 → AI 算力扩产 → HBM 需求暴增 → MU 直接受益。6/18 Truth Social 发帖当天 MU 涨 11%。Q1 Trump 仓位中 MU 持仓属于 AI 芯片板块。
 
 ---
 
