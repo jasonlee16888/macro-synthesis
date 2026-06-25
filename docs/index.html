@@ -90,10 +90,6 @@
 </head>
 <body>
 
-<audio id="bgm" loop>
-  <source src="https://cdn.pixabay.com/audio/2023/06/03/audio_6e4f80b05b.mp3" type="audio/mpeg">
-</audio>
-
 <div class="hero">
   <h1>Macro Synthesis</h1>
   <div class="sub">8‑Agent Trump Policy Radar × AI Regime Auto‑Trading</div>
@@ -208,8 +204,6 @@ function highlightPipe(n) {
 
 async function startAnalysis() {
   if(running) return;
-  const bgm = document.getElementById('bgm');
-  if(bgm) { bgm.volume = 0.15; bgm.play().catch(()=>{}); }
   running = true;
   document.getElementById('btnStart').disabled = true;
   document.getElementById('btnStop').disabled = false;
@@ -353,8 +347,6 @@ if(location.search.includes('demo=auto')) {
     await say('接下来，Agent 1 到 5 执行交叉验证。Trump Q1 仓位、国会议员交易、内部人买入、财报验证、追高风险——五个独立信号源加权打分，确保不是单一信号驱动的冲动交易。');
     await say('Night Watch 隔夜守护激活。扫描所有持仓的隔夜风险，当前无风险信号。');
 
-    const bgm = document.getElementById('bgm');
-    if(bgm) { bgm.volume = 0.12; bgm.play().catch(()=>{}); }
     document.getElementById('btnStart').click();
     await sleep(7000);
 
